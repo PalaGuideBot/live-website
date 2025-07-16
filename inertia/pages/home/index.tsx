@@ -1,10 +1,10 @@
 //import Autoplay from 'embla-carousel-autoplay'
+import { InferPageProps } from '@adonisjs/inertia/types'
 
+import type HomeController from '#controllers/home_controller'
 import { Head } from '@/components/head'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
-import Agenda from './components/agenda'
-import { InferPageProps } from '@adonisjs/inertia/types'
-import type HomeController from '#controllers/home_controller'
+import { Agenda } from './components/agenda'
 
 export type HomePageProps = InferPageProps<HomeController, 'handle'>
 
@@ -23,6 +23,12 @@ export default function HomePage(props: HomePageProps) {
         <CarouselContent className="items-center">
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
+              <div>Agenda</div>
+              <Agenda events={props.events} />
+            </section>
+          </CarouselItem>
+          <CarouselItem>
+            <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
               <div>HomePage</div>
             </section>
           </CarouselItem>
@@ -34,12 +40,6 @@ export default function HomePage(props: HomePageProps) {
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
               <div>Leaderboard</div>
-            </section>
-          </CarouselItem>
-          <CarouselItem>
-            <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <div>Agenda</div>
-              <Agenda events={props.events} />
             </section>
           </CarouselItem>
         </CarouselContent>
