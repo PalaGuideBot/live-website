@@ -1,0 +1,12 @@
+import { categories, trixiumCategories } from '#leaderboard/contents/categories'
+
+export type LeaderboardCategory = (typeof categories)[number]
+
+export type LeaderboardTrixiumCategory = (typeof trixiumCategories)[number]
+
+export type Category = LeaderboardCategory | `trixium.${LeaderboardTrixiumCategory}`
+
+export type CategoryItem = {
+  name: Category
+  cacheKey: string
+}
