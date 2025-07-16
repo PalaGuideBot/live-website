@@ -30,7 +30,11 @@
     "#database/*": "./database/*.js",
     "#tests/*": "./tests/*.js",
     "#start/*": "./start/*.js",
-    "#config/*": "./config/*.js"
+    "#config/*": "./config/*.js",
+    "#app/*": "./app/*.js",
+    "#event/*": "./app/event/*.js",
+    "#leaderboard/*": "./app/leaderboard/*.js",
+    "#paladium/*": "./app/paladium/*.js"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^7.8.2",
