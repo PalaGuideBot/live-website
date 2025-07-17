@@ -40,7 +40,12 @@ export function StatusSlide({ status }: StatusSlideProps) {
       <div className="flex-1 grid grid-cols-5 gap-8">
         <PlayerOnlineChart className="col-span-4" />
         <div className="flex-1 col-span-1 grid grid-rows-2 gap-8">
-          <Card className="pt-0 overflow-hidden">
+          <Card
+            className={cn(
+              'pt-0 overflow-hidden',
+              getBackgroundClass(status.java.global.status as 'unknown')
+            )}
+          >
             <CardHeader className="relative h-[90%]">
               <div
                 className="absolute inset-x-0 top-0 h-full bg-left-bottom"
@@ -62,7 +67,12 @@ export function StatusSlide({ status }: StatusSlideProps) {
               </div>
             </CardContent>
           </Card>
-          <Card className="pt-0 overflow-hidden">
+          <Card
+            className={cn(
+              'pt-0 overflow-hidden',
+              getBackgroundClass(status.launcher.status as 'unknown')
+            )}
+          >
             <CardHeader className="relative h-[90%]">
               <div className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-[#00B2FF] to-[90%] to-[#D1EDF9]" />
               <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-b from-transparent to-black" />
