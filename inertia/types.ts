@@ -1,0 +1,10 @@
+export type PaladiumStatus =
+  | 'online'
+  | 'offline'
+  | 'maintenance'
+  | 'running'
+  | 'starting'
+  | 'restarting'
+  | 'stopping'
+  | 'unknown'
+  | 'whitelist'
