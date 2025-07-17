@@ -129,7 +129,7 @@ export function Agenda({ events }: AgendaProps) {
           <CardHeader>
             <CardTitle>{pastEvents.length > 1 ? 'Événements passés' : 'Événement passé'}</CardTitle>
           </CardHeader>
-          <CardContent className="flex-1 grid gap-4">
+          <CardContent className="flex-1 grid grid-rows-3 gap-4">
             {pastEvents.length > 0 ? (
               pastEvents
                 .map((event) => (
