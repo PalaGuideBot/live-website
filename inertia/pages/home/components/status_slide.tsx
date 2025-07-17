@@ -48,13 +48,12 @@ export function StatusSlide({ status }: StatusSlideProps) {
           >
             <CardHeader className="relative h-[90%]">
               <div
-                className="absolute inset-x-0 top-0 h-full bg-left-bottom"
+                className="absolute inset-x-0 top-0 h-full bg-size-[200%] bg-left-bottom"
                 style={{
-                  backgroundImage: `url(https://media.discordapp.net/attachments/1063898417752973372/1393630534491570288/summer_rush_banner_720.png?ex=6879cdd3&is=68787c53&hm=91dd95af24775352fc8cf4a0bf324021059873270cf3fceaf4e7a8440d7aadbf&=&format=webp&quality=lossless&width=900&height=506)`,
+                  backgroundImage: `url(/map-background.png)`,
                 }}
               />
               <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-b from-transparent to-black" />
-              <div className="absolute inset-x-0 bottom-0 h-full backdrop-blur-xs" />
               <div className="absolute bottom-4 left-4 flex items-center gap-2">
                 <EarthIcon />
                 <CardTitle className="text-2xl">Global</CardTitle>
@@ -74,7 +73,10 @@ export function StatusSlide({ status }: StatusSlideProps) {
             )}
           >
             <CardHeader className="relative h-[90%]">
-              <div className="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-[#00B2FF] to-[90%] to-[#D1EDF9]" />
+              <div
+                className="absolute inset-x-0 top-0 h-full bg-right bg-cover"
+                style={{ backgroundImage: 'url(/launcher-background.png)' }}
+              />
               <div className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-b from-transparent to-black" />
               <div className="absolute bottom-4 left-4 flex items-center gap-2">
                 <GamepadIcon />
