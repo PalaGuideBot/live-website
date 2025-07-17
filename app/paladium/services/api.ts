@@ -97,17 +97,12 @@ class PaladiumService {
 
   async getLeaderboardRankingGlobal(category: LeaderboardCategory) {
     try {
-      let result: Infer<typeof leaderboardCategoryValidator> = []
+      const response = await this.client.get(`paladium/ranking/leaderboard/${category}/1`)
+      const data = await response.json()
 
-      for (let i = 0; i < 50; i++) {
-        const response = await this.client.get(`paladium/ranking/leaderboard/${category}/${i + 1}`)
-        const data = await response.json()
+      const result = await leaderboardCategoryValidator.validate(data)
 
-        const validatedData = await leaderboardCategoryValidator.validate(data)
-        result = [...result, ...validatedData]
-      }
-
-      return result
+      return result.toSorted((a, b) => a.position - b.position)
     } catch (error: unknown) {
       throw await buildError(error)
     }

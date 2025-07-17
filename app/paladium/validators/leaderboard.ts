@@ -15,6 +15,8 @@ export const leaderboardCategoryValidator = vine.compile(
   vine.array(
     vine.object({
       username: vine.string(),
+      uuid: vine.string(),
+      position: vine.number(),
       value: vine.number(),
     })
   )

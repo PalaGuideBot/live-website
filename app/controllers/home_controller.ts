@@ -20,7 +20,13 @@ export default class HomeController {
     //   const factionQuest = () => this.paladiumService.getFactionQuest()
     //   const factionOnYourMarks = () => this.paladiumService.getFactionOnYourMarks()
     //   const factionLeaderboard = () => this.paladiumService.getLeaderboardFactions()
-    //   const moneyLeaderboard = () => this.paladiumService.getLeaderboardRankingGlobal('money')
+    const moneyLeaderboard = () => {
+      return cache.getOrSet({
+        key: 'paladium.leaderboard.money',
+        factory: () => this.paladiumService.getLeaderboardRankingGlobal('money'),
+        ttl: '5min',
+      })
+    }
     //   const allianceLeaderboard = () => this.paladiumService.getLeaderboardRankingGlobal('alliance')
 
     return inertia.render('home/index', {
@@ -29,7 +35,7 @@ export default class HomeController {
       // factionQuest,
       // factionOnYourMarks,
       // factionLeaderboard,
-      // moneyLeaderboard,
+      moneyLeaderboard,
       // allianceLeaderboard,
     })
   }
