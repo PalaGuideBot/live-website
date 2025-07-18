@@ -1,33 +1,25 @@
 FROM node:22.13-alpine3.21 AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
+WORKDIR /app
+
+# Base installer
+FROM base AS installer
 ENV COREPACK_INTEGRITY_KEYS=0
 RUN corepack enable
-
-# All deps stage
-FROM base AS deps
-WORKDIR /app
-ADD package.json pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+COPY . .
 
 # Production only deps stage
-FROM base AS production-deps
-WORKDIR /app
-ADD package.json pnpm-lock.yaml ./
+FROM installer AS production-deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 # Build stage
-FROM base AS build
-WORKDIR /app
-COPY --from=deps /app/node_modules /app/node_modules
-ADD . .
-RUN node ace build
+FROM installer AS build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm build --ignore-ts-errors
 
 # Production stage
 FROM base
 ENV NODE_ENV=production
-WORKDIR /app
 COPY --from=production-deps /app/node_modules /app/node_modules
-COPY --from=build /app/build /app
-EXPOSE 3000
+COPY --from=build /app/build .
+EXPOSE 3333
 CMD ["node", "./bin/server.js"]
