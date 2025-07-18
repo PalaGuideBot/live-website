@@ -139,6 +139,7 @@ export function AgendaSlide({ events }: AgendaSlideProps) {
                     event={{ ...event, imageUrl: eventImageUrl(event.id) }}
                   />
                 ))
+                .toReversed()
                 .slice(0, 3)
             ) : (
               <div className="text-center">Aucun événement passé</div>
@@ -194,7 +195,7 @@ export function AgendaSlide({ events }: AgendaSlideProps) {
               {upcomingEvents.length > 1 ? 'Événements suivant' : 'Événement suivant'}
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex-1 grid gap-4">
+          <CardContent className="flex-1 grid grid-rows-3 gap-4">
             {upcomingEvents.length > 2 ? (
               upcomingEvents
                 .map((event) => (
