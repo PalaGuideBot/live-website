@@ -7,6 +7,7 @@ import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carouse
 import { AgendaSlide } from './components/agenda_slide'
 import { LeaderboardSlide } from './components/leaderboard_slide'
 import { StatusSlide } from './components/status_slide'
+import { HomeSlide } from './components/home_slide'
 
 export type HomePageProps = InferPageProps<HomeController, 'handle'>
 
@@ -53,7 +54,7 @@ export default function HomePage(props: HomePageProps) {
           </CarouselItem>
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <div>HomePage</div>
+              <HomeSlide />
             </section>
           </CarouselItem>
         </CarouselContent>

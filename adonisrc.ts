@@ -38,7 +38,8 @@ export default defineConfig({
     () => import('#cache/providers/cache_provider'),
     () => import('@adonisjs/transmit/transmit_provider'),
     () => import('@adonisjs/session/session_provider'),
-    () => import('#providers/player_online_provider')
+    () => import('#providers/player_online_provider'),
+    () => import('#providers/twitch_chat_provider'),
   ],
 
   /*
