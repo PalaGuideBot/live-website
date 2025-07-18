@@ -36,19 +36,16 @@ export default function HomePage(props: HomePageProps) {
         <CarouselContent className="items-center">
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <div>Leaderboard</div>
               <LeaderboardSlide money={moneyLeaderboard} />
             </section>
           </CarouselItem>
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <div>Etat des serveurs</div>
               <StatusSlide status={status} />
             </section>
           </CarouselItem>
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <div>Agenda</div>
               <AgendaSlide events={events} />
             </section>
           </CarouselItem>
