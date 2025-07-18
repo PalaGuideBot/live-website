@@ -1,25 +1,24 @@
 import type { ApplicationService } from '@adonisjs/core/types'
-import { ChatClient } from '@twurple/chat'
 import { StaticAuthProvider } from '@twurple/auth'
-import transmit from '@adonisjs/transmit/services/main'
+import { ChatClient } from '@twurple/chat'
+
+import env from '#start/env'
 
 export default class TwitchChatProvider {
   private chatClient: ChatClient
 
   constructor(protected app: ApplicationService) {
     const authProvider = new StaticAuthProvider(
-      'ID_CLIENT_TWITCH_HERE', // Replace with your actual Twitch client ID
-      'TOKEN_HERE' // Replace with your actual Twitch OAuth token
+      env.get('TWITCH_CLIENT_ID'),
+      env.get('TWITCH_CLIENT_TOKEN')
     )
     this.chatClient = new ChatClient({ authProvider })
   }
 
-  /**
-   * The process has been started
-   */
-  async ready() {
-    this.chatClient.connect()
-    await this.chatClient.join('palaguidebot')
+  async register() {
+    const logger = await this.app.container.make('logger')
+    const transmit = await this.app.container.make('transmit')
+
     this.chatClient.onMessage((channel, user, message, msg) => {
       if (channel !== 'palaguidebot') {
         return
@@ -35,14 +34,26 @@ export default class TwitchChatProvider {
       }
       transmit.broadcast('twitch.chat.message', chatMessage)
     })
+    this.chatClient.onConnect(() => {
+      logger.info('Connected to Twitch chat')
+    })
+    this.chatClient.onDisconnect(() => {
+      logger.info('Disconnected from Twitch chat')
+    })
+  }
+
+  /**
+   * The process has been started
+   */
+  async ready() {
+    this.chatClient.connect()
+    await this.chatClient.join('palaguidebot')
   }
 
   /**
    * Preparing to shutdown the app
    */
   async shutdown() {
-    this.chatClient.onDisconnect(() => {
-      console.log('Disconnected from Twitch chat')
-    })
+    this.chatClient.quit()
   }
 }

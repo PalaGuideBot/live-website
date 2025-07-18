@@ -30,4 +30,7 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   PALAGUIDEBOT_IMAGE_URL: Env.schema.string(),
   PALAGUIDEBOT_IMAGE_KEY: Env.schema.string(),
+
+  TWITCH_CLIENT_ID: Env.schema.string(),
+  TWITCH_CLIENT_TOKEN: Env.schema.string(),
 })
