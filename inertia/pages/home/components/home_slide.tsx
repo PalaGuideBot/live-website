@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 
 import { TwitchIcon } from '@/components/icons'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Details, DetailsContent, DetailsTitle } from '@/components/ui/details'
 import { cn } from '@/lib/utils'
 import { useTwitchChat } from '../hooks/use_twitch_chat'
 
@@ -56,16 +57,44 @@ function TwitchChatCard({ className, ...props }: React.ComponentProps<typeof Car
 export function HomeSlide() {
   return (
     <div className="flex-1 grid grid-cols-4 gap-4">
-      <Card>
-        <CardContent>
-          <h1 className="text-2xl font-bold mb-4">Bienvenue sur le live PalaGuideBot</h1>
-          <p className="text-muted-foreground">
-            Sur ce live vous pouvez retrouver différentes informations concernant le serveur
-            Paladium, les événements à venir, l'état des serveurs et bien plus encore. Restez
-            connecté pour ne rien manquer !
-          </p>
-        </CardContent>
-      </Card>
+      <div className="col-span-2 flex flex-col gap-8">
+        <Card className="overflow-hidden p-0">
+          <img src="https://image.palaguidebot.fr/banner/bot.webp" className="w-full" />
+        </Card>
+        <Card className="flex-1">
+          <CardHeader className="text-2xl">
+            <CardTitle>Bienvenue sur le live PalaGuideBot</CardTitle>
+            <CardDescription className="text-lg">
+              Retrouvez les informations concernant Paladium en temps réel.
+              <br />
+              Restez connecté pour ne rien manquer !
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex-1 flex flex-col justify-evenly gap-4 [&_*]:text-xl">
+            <Details>
+              <DetailsTitle>Site web</DetailsTitle>
+              <DetailsContent>https://palaguidebot.fr</DetailsContent>
+            </Details>
+            <Details>
+              <DetailsTitle>Discord Support</DetailsTitle>
+              <DetailsContent>discord.gg/palaguidebot</DetailsContent>
+            </Details>
+            <Details>
+              <DetailsTitle>Nous soutenir</DetailsTitle>
+              <DetailsContent className="text-transparent bg-gradient-to-bl bg-clip-text from-[#ffb702] from-60% to-[#e9a702]">
+                https://github.com/sponsors/PalaGuideBot
+              </DetailsContent>
+            </Details>
+            <Details>
+              <DetailsTitle>Crédits</DetailsTitle>
+              <DetailsContent>Tonykun7 - Créateur - tonykun.me</DetailsContent>
+              <DetailsContent>Riveur - Développeur Web - riveur.com</DetailsContent>
+              <DetailsContent>Zeluck_ - Graphiste - zeluck.fr</DetailsContent>
+            </Details>
+          </CardContent>
+        </Card>
+      </div>
+
       <TwitchChatCard className="col-start-4" />
     </div>
   )
