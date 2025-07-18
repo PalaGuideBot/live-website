@@ -17,6 +17,7 @@ import {
   leaderboardCategoryValidator,
   trixiumValidators,
 } from '#paladium/validators/leaderboard'
+import { playerJobsValidator, playerProfileValidator } from '#paladium/validators/player'
 import { statusValidator } from '#paladium/validators/status'
 import env from '#start/env'
 
@@ -31,6 +32,48 @@ class PaladiumService {
       Authorization: `Bearer ${env.get('PALADIUM_API_KEY')}`,
     },
   })
+
+  // PLAYER REQUESTS
+
+  async getPlayerProfile(username: string) {
+    try {
+      const response = await this.client.get(`paladium/player/profile/${username}`)
+      const data = await response.json()
+
+      return playerProfileValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getPlayerJobs(uuid: string) {
+    try {
+      const response = await this.client.get(`paladium/player/profile/${uuid}/jobs`)
+      const data = await response.json()
+
+      return playerJobsValidator.validate(data)
+    } catch (error: unknown) {
+      return null // Jobs are not required
+    }
+  }
+
+  async getAllPlayerData(username: string) {
+    const profile = await this.getPlayerProfile(username)
+
+    const uuid = profile.uuid
+
+    const jobs = await this.getPlayerJobs(uuid)
+
+    return {
+      profile,
+      jobs: jobs ?? {
+        alchemist: { level: 0, xp: 0 },
+        farmer: { level: 0, xp: 0 },
+        hunter: { level: 0, xp: 0 },
+        miner: { level: 0, xp: 0 },
+      },
+    }
+  }
 
   // EVENTS REQUESTS
 

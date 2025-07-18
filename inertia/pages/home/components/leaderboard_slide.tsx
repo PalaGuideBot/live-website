@@ -1,7 +1,10 @@
 import { IdleAnimation } from 'skinview3d'
 
+import { PaladiumJob } from '@/components/paladium_job'
+import { PaladiumRank } from '@/components/paladium_rank'
 import { SkinViewer3d } from '@/components/skin_viewer_3d'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Details, DetailsContent, DetailsTitle } from '@/components/ui/details'
 import { getHeadUrl, getSkinUrl } from '@/lib/minecraft'
 import { cn, formatPrice } from '@/lib/utils'
 import type { HomePageProps } from '@/pages/home/index'
@@ -18,7 +21,7 @@ export function LeaderboardSlide({ money }: LeaderboardSlideProps) {
           <CardTitle>Classement Money</CardTitle>
         </CardHeader>
         <CardContent className="px-0 flex-1 grid grid-rows-10">
-          {money.map((player) => (
+          {money.leaderboard.map((player) => (
             <div
               key={player.uuid}
               className="px-6 py-4 border-t flex items-center justify-between gap-4"
@@ -46,38 +49,71 @@ export function LeaderboardSlide({ money }: LeaderboardSlideProps) {
           ))}
         </CardContent>
       </Card>
-      <TopPlayerCard username={money.at(0)!.username} />
+      {money.topPlayer && <TopPlayerCard player={money.topPlayer} />}
     </div>
   )
 }
 
-interface TopPlayerCardProps extends React.ComponentProps<typeof Card> {
-  username: string
+interface TopPlayerCardProps extends React.ComponentProps<'div'> {
+  player: NonNullable<HomePageProps['moneyLeaderboard']['topPlayer']>
 }
 
-function TopPlayerCard({ username, ...props }: TopPlayerCardProps) {
+function TopPlayerCard({ player, className, ...props }: TopPlayerCardProps) {
   return (
-    <Card {...props}>
-      <CardHeader className="border-b justify-center">
-        <div className="inline-flex items-center gap-2">
-          <CardTitle className="block">{username}</CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent className="flex-1 flex justify-center items-center">
-        <SkinViewer3d
-          className="h-auto! w-full! pointer-events-none!"
-          skinUrl={getSkinUrl(username)}
-          options={{ enableControls: false }}
-          width="330"
-          height="600"
-          onReady={({ viewer }) => {
-            viewer.animation = new IdleAnimation()
-            viewer.animation.speed = 3
-            viewer.autoRotate = true
-            viewer.autoRotateSpeed = 0.5
-          }}
-        />
-      </CardContent>
-    </Card>
+    <div className={cn('grid grid-rows-3 gap-8', className)} {...props}>
+      <Card className="row-span-2">
+        <CardHeader className="border-b justify-center">
+          <div className="inline-flex items-center gap-2">
+            <CardTitle className="block">{player.profile.username}</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="flex-1 flex justify-center items-center">
+          <SkinViewer3d
+            className="h-auto! w-full! pointer-events-none!"
+            skinUrl={getSkinUrl(player.profile.username)}
+            options={{ enableControls: false }}
+            width="330"
+            height="400"
+            onReady={({ viewer }) => {
+              viewer.animation = new IdleAnimation()
+              viewer.animation.speed = 3
+              viewer.autoRotate = true
+              viewer.autoRotateSpeed = 0.5
+            }}
+          />
+        </CardContent>
+      </Card>
+      <Card className="row-span-1">
+        <CardContent className="flex-1 flex flex-col justify-evenly">
+          <Details className="flex items-center">
+            <DetailsTitle className="text-lg">Pseudo :</DetailsTitle>
+            <DetailsContent className="text-lg">{player.profile.username}</DetailsContent>
+          </Details>
+          <Details className="flex items-center">
+            <DetailsTitle className="text-lg">Faction :</DetailsTitle>
+            <DetailsContent className="text-lg">
+              {player.profile.faction || 'Wilderness'}
+            </DetailsContent>
+          </Details>
+          <Details className="flex items-center">
+            <DetailsTitle className="text-lg">Rank :</DetailsTitle>
+            <DetailsContent className="text-lg">
+              <PaladiumRank rank={player.profile.rank || 'default'} />
+            </DetailsContent>
+          </Details>
+          <Details className="flex items-center">
+            <DetailsTitle className="text-lg">Temps de jeu :</DetailsTitle>
+            <DetailsContent className="text-lg">
+              {player.profile.timePlayed === -1 ? 'Masqué' : player.profile.timePlayed}
+            </DetailsContent>
+          </Details>
+          <div className="grid grid-cols-4 gap-4 items-center">
+            {Object.entries(player.jobs).map(([job, info]) => (
+              <PaladiumJob key={job} job={job} info={info} />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

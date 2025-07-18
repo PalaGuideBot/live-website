@@ -23,7 +23,17 @@ export default class HomeController {
     const moneyLeaderboard = () => {
       return cache.getOrSet({
         key: 'paladium.leaderboard.money',
-        factory: () => this.paladiumService.getLeaderboardRankingGlobal('money'),
+        factory: async () => {
+          const leaderboard = await this.paladiumService.getLeaderboardRankingGlobal('money')
+          const topPlayer = leaderboard.at(0)
+            ? await this.paladiumService.getAllPlayerData(leaderboard.at(0)!.username)
+            : null
+
+          return {
+            leaderboard,
+            topPlayer,
+          }
+        },
         ttl: '5min',
       })
     }
