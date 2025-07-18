@@ -6,8 +6,10 @@ import ky, { HTTPError } from 'ky'
 
 import { ImageService } from '#paladium/services/image'
 
+import cache from '#cache/cache'
 import { getOnYourMarksGoalItem } from '#event/contents/events'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
+import { generateDefaultStatus } from '#paladium/contents/status'
 import type { ApiResponseError } from '#paladium/types'
 import { factionOnYourMarksValidator, factionQuestValidator } from '#paladium/validators/faction'
 import {
@@ -161,7 +163,10 @@ class PaladiumService {
 
       return statusValidator.validate(data)
     } catch (error: unknown) {
-      throw await buildError(error)
+      const cachedPlayerCount = await cache.get<number | undefined>({
+        key: 'paladium.status.lastPlayerCount',
+      })
+      return generateDefaultStatus(cachedPlayerCount ?? 0)
     }
   }
 }
