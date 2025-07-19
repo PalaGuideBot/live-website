@@ -10,13 +10,13 @@ OUTRES="1920x1080"
 FPS="30"
 
 # i-frame interval; should be double of FPS
-GOP="30"
+GOP="60"
 
 # Minimum i-frame interval; should be equal to fps
 GOPMIN="30"
 
 # Max is 6
-THREADS="2"
+THREADS="6"
 
 # Constant bitrate (should be between 1000k - 3000k)
 CBR="3000k"
@@ -56,5 +56,5 @@ ffmpeg -stream_loop -1 \
 	-threads $THREADS \
 	-strict normal \
 	-bufsize $CBR \
-	-shortest \
+#	-shortest \
 	"rtmp://$SERVER.live-video.net/app/$RTMP_KEY"
