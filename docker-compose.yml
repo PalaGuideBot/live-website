@@ -1,11 +1,21 @@
 services:
   website:
-    build: .
-    container_name: website
-    ports:
-      - '3000:3000'
+   build:
+     context: .
+     dockerfile: Dockerfile
+   container_name: website
+   ports:
+     - '3333:3333'
+   env_file:
+     - .env
+   restart: always 
+  live:
+    build: 
+      context: .
+      dockerfile: Dockerfile.live
+    container_name: live
+    depends_on:
+     - website
     env_file:
       - .env
-    environment:
-      - NODE_ENV=production
-    restart: always 
+    restart: always
