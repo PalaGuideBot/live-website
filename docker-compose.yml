@@ -9,13 +9,13 @@ services:
    env_file:
      - .env
    restart: always 
-  live:
-    build: 
-      context: .
-      dockerfile: Dockerfile.live
-    container_name: live
-    depends_on:
-     - website
-    env_file:
-      - .env
-    restart: always
+  # live:
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile.live
+  #   container_name: live
+  #   depends_on:
+  #    - website
+  #   env_file:
+  #     - .env
+  #   restart: always
