@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Sleep for website to start
+echo "[0/3] Waiting for website to start"
+sleep 30
+
 # Install fake monitor
 echo "[1/3] Installing fake monitor"
 Xvfb :1 -screen 0 1920x1080x16 &
