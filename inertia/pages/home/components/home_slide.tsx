@@ -30,10 +30,10 @@ function TwitchChatCard({ className, ...props }: React.ComponentProps<typeof Car
           <TwitchIcon className="size-4 ml-1" />
         </CardTitle>
       </CardHeader>
-      <CardContent className="p-4">
+      <CardContent className="flex-1 relative">
         <div
           ref={chatContainerRef}
-          className="flex-1 overflow-y-auto space-y-2"
+          className="space-y-2 p-4 absolute inset-0 overflow-y-auto"
           style={{
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -94,7 +94,6 @@ export function HomeSlide() {
           </CardContent>
         </Card>
       </div>
-
       <TwitchChatCard className="col-start-4" />
     </div>
   )
