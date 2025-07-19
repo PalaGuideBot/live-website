@@ -1,4 +1,4 @@
-//import Autoplay from 'embla-carousel-autoplay'
+import Autoplay from 'embla-carousel-autoplay'
 import { InferPageProps } from '@adonisjs/inertia/types'
 
 import type HomeController from '#controllers/home_controller'
@@ -25,14 +25,7 @@ export default function HomePage(props: HomePageProps) {
   return (
     <>
       <Head title="Accueil" />
-      <Carousel
-        opts={{ loop: true }}
-        plugins={
-          [
-            /*Autoplay({ delay: 3000 })*/
-          ]
-        }
-      >
+      <Carousel opts={{ loop: true }} plugins={[Autoplay({ delay: 5000 })]}>
         <CarouselContent className="items-center">
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
