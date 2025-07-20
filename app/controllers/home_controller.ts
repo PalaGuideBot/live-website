@@ -2,12 +2,16 @@ import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
 import { dailyEvents } from '#app/event/contents/events'
+import { GitHubService } from '#app/github/services/api'
 import { PaladiumService } from '#app/paladium/services/api'
 import cache from '#cache/cache'
 
 @inject()
 export default class HomeController {
-  constructor(private paladiumService: PaladiumService) {}
+  constructor(
+    private paladiumService: PaladiumService,
+    private githubService: GitHubService
+  ) {}
 
   async handle({ inertia }: HttpContext) {
     const status = () => {
@@ -39,6 +43,14 @@ export default class HomeController {
     }
     //   const allianceLeaderboard = () => this.paladiumService.getLeaderboardRankingGlobal('alliance')
 
+    const sponsors = () => {
+      return cache.getOrSet({
+        key: 'github.sponsors',
+        factory: () => this.githubService.getSponsors(),
+        ttl: '15min',
+      })
+    }
+
     return inertia.render('home/index', {
       events: dailyEvents,
       status,
@@ -47,6 +59,7 @@ export default class HomeController {
       // factionLeaderboard,
       moneyLeaderboard,
       // allianceLeaderboard,
+      sponsors,
     })
   }
 }

@@ -20,6 +20,7 @@ export default function HomePage(props: HomePageProps) {
     // factionLeaderboard,
     moneyLeaderboard,
     // allianceLeaderboard,
+    sponsors,
   } = props
 
   return (
@@ -44,7 +45,7 @@ export default function HomePage(props: HomePageProps) {
           </CarouselItem>
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <HomeSlide />
+              <HomeSlide sponsors={sponsors} />
             </section>
           </CarouselItem>
         </CarouselContent>
