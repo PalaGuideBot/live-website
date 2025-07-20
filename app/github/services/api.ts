@@ -2,6 +2,7 @@ import { Exception } from '@adonisjs/core/exceptions'
 import { errors } from '@vinejs/vine'
 import ky, { HTTPError } from 'ky'
 
+import { githubSponsorsValidator } from '#app/github/validators/sponsors'
 import type { ApiResponseError } from '#paladium/types'
 import env from '#start/env'
 
@@ -48,25 +49,8 @@ class GitHubService {
         json: { query },
       })
 
-      const data = (await response.json()) as {
-        data?: {
-          organization?: {
-            sponsorshipsAsMaintainer: {
-              nodes: Array<{
-                sponsorEntity: {
-                  login: string
-                  name: string
-                  avatarUrl: string
-                }
-                tier: {
-                  name: string
-                  monthlyPriceInDollars: number
-                }
-              }>
-            }
-          }
-        }
-      }
+      const rawData = await response.json()
+      const data = await githubSponsorsValidator.validate(rawData)
 
       if (!data.data?.organization) {
         throw new Exception('Impossible de récupérer les sponsors', {
