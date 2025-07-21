@@ -28,25 +28,6 @@ function TwitchChatCard({ className, ...props }: React.ComponentProps<typeof Car
     }
   }, [messages])
 
-  useEffect(() => {
-    const intervalId = setInterval(
-      () => {
-        if (chatContainerRef.current) {
-          chatContainerRef.current.innerHTML =
-            '<div class="text-center text-gray-400 p-4">Chat effacé automatiquement après 30 minutes</div>'
-          setTimeout(() => {
-            if (chatContainerRef.current) {
-              chatContainerRef.current.innerHTML = ''
-            }
-          }, 5000)
-        }
-      },
-      30 * 60 * 1000
-    )
-
-    return () => clearInterval(intervalId)
-  }, [])
-
   return (
     <Card className={cn('overflow-hidden p-0 gap-0', className)} {...props}>
       <CardHeader className="bg-gradient-to-bl from-card from-20% to-[#6441a5]/40 p-4 flex justify-center items-center">
