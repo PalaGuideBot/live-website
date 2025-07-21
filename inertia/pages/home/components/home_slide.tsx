@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import type { HomePageProps } from '@/pages/home/index'
 import { useTwitchChat } from '../hooks/use_twitch_chat'
 import { Separator } from '@/components/ui/separator'
+import { HeartHandshake } from 'lucide-react'
 
 interface HomeSlideProps {
   sponsors: HomePageProps['sponsors']
@@ -69,7 +70,8 @@ function SponsorsCard({
     <Card className={cn('overflow-hidden p-0 gap-0', className)} {...props}>
       <CardHeader className="bg-gradient-to-bl from-card from-20% to-[#ffb702]/20 p-4">
         <CardTitle className="flex items-center gap-2 font-semibold text-2xl">
-          <span>💖 Nos Sponsors</span>
+          <HeartHandshake className="size-6 ml-1 " />
+          <span>Nos Sponsors</span>
         </CardTitle>
         <CardDescription className="text-lg">
           Vous pouvez soutenir le projet sur Github
