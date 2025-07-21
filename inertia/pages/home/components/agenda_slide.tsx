@@ -102,7 +102,7 @@ export function AgendaSlide({ events }: AgendaSlideProps) {
           <CardTitle>Légende des événements</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
             {uniqueEvents.map((event) => (
               <div
                 key={event.id}
