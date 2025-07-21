@@ -1,11 +1,8 @@
-import { IdleAnimation } from 'skinview3d'
-
 import { PaladiumJob } from '@/components/paladium_job'
 import { PaladiumRank } from '@/components/paladium_rank'
-import { SkinViewer3d } from '@/components/skin_viewer_3d'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Details, DetailsContent, DetailsTitle } from '@/components/ui/details'
-import { getHeadUrl, getSkinUrl } from '@/lib/minecraft'
+import { getHeadUrl } from '@/lib/minecraft'
 import { cn, formatPrice } from '@/lib/utils'
 import type { HomePageProps } from '@/pages/home/index'
 
@@ -67,20 +64,13 @@ function TopPlayerCard({ player, className, ...props }: TopPlayerCardProps) {
             <CardTitle className="block">{player.profile.username}</CardTitle>
           </div>
         </CardHeader>
-        <CardContent className="flex-1 flex justify-center items-center">
-          <SkinViewer3d
-            className="h-auto! w-full! pointer-events-none!"
-            skinUrl={getSkinUrl(player.profile.username)}
-            options={{ enableControls: false }}
-            width="330"
-            height="400"
-            onReady={({ viewer }) => {
-              viewer.animation = new IdleAnimation()
-              viewer.animation.speed = 3
-              viewer.autoRotate = true
-              viewer.autoRotateSpeed = 0.5
-            }}
-          />
+        <CardContent className="flex-1 relative">
+          <div className="absolute inset-0 flex justify-center items-center">
+            <img
+              src={`https://starlightskins.lunareclipse.studio/render/isometric/${player.profile.username}/full`}
+              className="h-full w-auto"
+            />
+          </div>
         </CardContent>
       </Card>
       <Card className="row-span-1">
