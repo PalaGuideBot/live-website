@@ -11,12 +11,7 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart'
+import { ChartConfig, ChartContainer } from '@/components/ui/chart'
 import { Spinner } from '@/components/ui/spinner'
 import { getFactionBannerUrl, getFactionIconUrl } from '@/contents/faction'
 import { translateStatus } from '@/contents/status'
