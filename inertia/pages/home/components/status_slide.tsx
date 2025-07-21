@@ -11,12 +11,7 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart'
+import { ChartConfig, ChartContainer } from '@/components/ui/chart'
 import { Spinner } from '@/components/ui/spinner'
 import { getFactionBannerUrl, getFactionIconUrl } from '@/contents/faction'
 import { translateStatus } from '@/contents/status'
@@ -151,7 +146,6 @@ function PlayerOnlineChart({ className, ...props }: React.ComponentProps<typeof 
       <CardContent className="flex-1 px-2 sm:p-6">
         <ChartContainer config={chartConfig} className="aspect-auto h-full w-full">
           <AreaChart
-            accessibilityLayer
             data={onlinePlayers}
             margin={{
               left: 12,
@@ -180,21 +174,6 @@ function PlayerOnlineChart({ className, ...props }: React.ComponentProps<typeof 
                   second: '2-digit',
                 })
               }}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  className="w-[150px]"
-                  nameKey="count"
-                  labelFormatter={(value) => {
-                    return new Date(value).toLocaleTimeString('default', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                      second: '2-digit',
-                    })
-                  }}
-                />
-              }
             />
             <Area
               dataKey="count"

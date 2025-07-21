@@ -20,10 +20,10 @@ export default class TwitchChatProvider {
     const transmit = await this.app.container.make('transmit')
 
     this.chatClient.onMessage((channel, user, message, msg) => {
-      if (channel !== 'palaguidebot') {
-        return
-      }
+      if (channel !== 'palaguidebot') return
+
       const chatMessage = {
+        id: msg.id,
         username: user,
         message: message,
         timestamp: new Date().toLocaleTimeString('fr-FR', {

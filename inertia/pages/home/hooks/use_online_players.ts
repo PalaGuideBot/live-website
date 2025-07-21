@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { DateTime } from '@/lib/luxon'
 import { transmit } from '@/lib/transmit'
 
 type IncomingData = {
@@ -14,7 +15,12 @@ export function useOnlinePlayers() {
     const subscription = transmit.subscription('player.online')
 
     const unsbuscribe = subscription.onMessage((data: IncomingData) => {
-      setOnlinePlayers((prev) => [...prev, data])
+      setOnlinePlayers((prev) => [
+        ...prev.filter(
+          (player) => Number(DateTime.fromISO(player.date).diffNow('hour').hours.toFixed(0)) >= -12
+        ),
+        data,
+      ])
     })
 
     subscription.create()

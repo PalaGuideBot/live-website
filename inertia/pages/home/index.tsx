@@ -30,7 +30,7 @@ export default function HomePage(props: HomePageProps) {
         <CarouselContent className="items-center">
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <LeaderboardSlide money={moneyLeaderboard} />
+              <HomeSlide sponsors={sponsors} />
             </section>
           </CarouselItem>
           <CarouselItem>
@@ -45,7 +45,7 @@ export default function HomePage(props: HomePageProps) {
           </CarouselItem>
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <HomeSlide sponsors={sponsors} />
+              <LeaderboardSlide money={moneyLeaderboard} />
             </section>
           </CarouselItem>
         </CarouselContent>
