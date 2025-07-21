@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { transmit } from '@/lib/transmit'
 
 interface ChatMessage {
+  id: string
   username: string
   message: any
   timestamp: string
@@ -17,6 +18,12 @@ export function useTwitchChat() {
 
     const unsubscribe = subscription.onMessage((data: ChatMessage) => {
       setMessages((prev) => [...prev, data])
+      setTimeout(
+        () => {
+          setMessages((prev) => prev.filter((msg) => msg.id !== data.id))
+        },
+        1000 * 60 * 10
+      )
     })
 
     subscription.create()
