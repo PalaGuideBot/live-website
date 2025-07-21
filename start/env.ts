@@ -33,4 +33,6 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   TWITCH_CLIENT_ID: Env.schema.string(),
   TWITCH_CLIENT_TOKEN: Env.schema.string(),
+
+  GITHUB_TOKEN: Env.schema.string(),
 })
