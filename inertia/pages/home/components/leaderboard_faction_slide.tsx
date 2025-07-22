@@ -16,7 +16,7 @@ export function LeaderboardFactionSlide({ faction }: LeaderboardSlideProps) {
           <CardTitle>Classement Faction</CardTitle>
         </CardHeader>
         <CardContent className="px-0 flex-1 grid grid-rows-10">
-          {faction.leaderboard.map((item) => (
+          {faction.leaderboard.map((item, index) => (
             <div
               key={item.name}
               className="px-6 py-4 border-t flex items-center justify-between gap-4"
@@ -25,12 +25,12 @@ export function LeaderboardFactionSlide({ faction }: LeaderboardSlideProps) {
                 <div
                   className={cn(
                     'w-12 font-mc text-xl',
-                    item.position === 1 && 'text-yellow-500',
-                    item.position === 2 && 'text-gray-500',
-                    item.position === 3 && 'text-amber-900'
+                    index + 1 === 1 && 'text-yellow-500',
+                    index + 1 === 2 && 'text-gray-500',
+                    index + 1 === 3 && 'text-amber-900'
                   )}
                 >
-                  #{item.position}
+                  #{index + 1}
                 </div>
                 <div className="flex items-center gap-2">
                   <img src={item.emblemUrl} className="size-14" />
