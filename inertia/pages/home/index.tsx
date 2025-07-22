@@ -5,7 +5,8 @@ import type HomeController from '#controllers/home_controller'
 import { Head } from '@/components/head'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { AgendaSlide } from './components/agenda_slide'
-import { LeaderboardSlide } from './components/leaderboard_slide'
+import { LeaderboardMoneySlide } from './components/leaderboard_money_slide'
+import { LeaderboardFactionSlide } from './components/leaderboard_faction_slide'
 import { StatusSlide } from './components/status_slide'
 import { HomeSlide } from './components/home_slide'
 
@@ -17,7 +18,7 @@ export default function HomePage(props: HomePageProps) {
     status,
     // factionQuest,
     // factionOnYourMarks,
-    // factionLeaderboard,
+    factionLeaderboard,
     moneyLeaderboard,
     // allianceLeaderboard,
     sponsors,
@@ -45,7 +46,12 @@ export default function HomePage(props: HomePageProps) {
           </CarouselItem>
           <CarouselItem>
             <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
-              <LeaderboardSlide money={moneyLeaderboard} />
+              <LeaderboardMoneySlide money={moneyLeaderboard} />
+            </section>
+          </CarouselItem>
+          <CarouselItem>
+            <section className="min-h-dvh w-full flex flex-col gap-8 p-8">
+              <LeaderboardFactionSlide faction={factionLeaderboard} />
             </section>
           </CarouselItem>
         </CarouselContent>

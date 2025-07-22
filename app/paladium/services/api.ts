@@ -11,7 +11,12 @@ import { getOnYourMarksGoalItem } from '#event/contents/events'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
 import { generateDefaultStatus } from '#paladium/contents/status'
 import type { ApiResponseError } from '#paladium/types'
-import { factionOnYourMarksValidator, factionQuestValidator } from '#paladium/validators/faction'
+import {
+  factionOnYourMarksValidator,
+  factionQuestValidator,
+  factionProfileValidator,
+  factionMembersValidator,
+} from '#paladium/validators/faction'
 import {
   factionsLeaderboardValidator,
   leaderboardCategoryValidator,
@@ -32,6 +37,30 @@ class PaladiumService {
       Authorization: `Bearer ${env.get('PALADIUM_API_KEY')}`,
     },
   })
+
+  // FACTION REQUESTS
+
+  async getFactionProfile(name: string) {
+    try {
+      const response = await this.client.get(`paladium/faction/profile/${name}`)
+      const data = await response.json()
+
+      return factionProfileValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getFactionMembers(uuid: string) {
+    try {
+      const response = await this.client.get(`paladium/faction/profile/${uuid}/players?limit=100`)
+      const data = await response.json()
+
+      return factionMembersValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
 
   // PLAYER REQUESTS
 

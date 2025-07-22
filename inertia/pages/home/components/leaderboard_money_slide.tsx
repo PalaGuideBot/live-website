@@ -10,7 +10,7 @@ interface LeaderboardSlideProps {
   money: HomePageProps['moneyLeaderboard']
 }
 
-export function LeaderboardSlide({ money }: LeaderboardSlideProps) {
+export function LeaderboardMoneySlide({ money }: LeaderboardSlideProps) {
   return (
     <div className="flex-1 grid grid-cols-4 gap-8 [&_[data-slot=card-title]]:text-xl">
       <Card className="col-span-3 pb-0">
