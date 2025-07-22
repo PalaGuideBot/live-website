@@ -168,7 +168,7 @@ function PlayerOnlineChart({ className, ...props }: React.ComponentProps<typeof 
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value)
-                return date.toLocaleTimeString('default', {
+                return date.toLocaleTimeString('fr-FR', {
                   hour: '2-digit',
                   minute: '2-digit',
                   second: '2-digit',
