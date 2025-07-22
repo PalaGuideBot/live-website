@@ -11,8 +11,8 @@ interface LeaderboardSlideProps {
 export function LeaderboardFactionSlide({ faction }: LeaderboardSlideProps) {
   return (
     <div className="flex-1 grid grid-cols-4 gap-8 [&_[data-slot=card-title]]:text-xl">
-      <Card className="col-span-3 pb-0">
-        <CardHeader>
+      <Card className="col-span-3 py-4 pb-0 gap-4">
+        <CardHeader className="px-4">
           <CardTitle>Classement Faction</CardTitle>
         </CardHeader>
         <CardContent className="px-0 flex-1 grid grid-rows-10">
@@ -33,7 +33,7 @@ export function LeaderboardFactionSlide({ faction }: LeaderboardSlideProps) {
                   #{item.position}
                 </div>
                 <div className="flex items-center gap-2">
-                  <img src={item.emblemUrl} className="size-16" />
+                  <img src={item.emblemUrl} className="size-14" />
                   <span className="font-mc text-lg">{item.name}</span>
                 </div>
               </div>
@@ -54,8 +54,8 @@ interface TopFactionCardProps extends React.ComponentProps<'div'> {
 function TopFactionCard({ faction, className, ...props }: TopFactionCardProps) {
   return (
     <div className={cn('grid auto-rows-min gap-8', className)} {...props}>
-      <Card>
-        <CardHeader className="border-b justify-center">
+      <Card className="py-4 gap-4">
+        <CardHeader className="border-b [.border-b]:pb-4">
           <CardTitle className="text-center">Top Faction</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-4">

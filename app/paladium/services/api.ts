@@ -32,7 +32,7 @@ class PaladiumService {
 
   protected client = ky.create({
     prefixUrl: env.get('PALADIUM_BASE_URL'),
-    timeout: 10000,
+    timeout: 100000,
     headers: {
       Authorization: `Bearer ${env.get('PALADIUM_API_KEY')}`,
     },
