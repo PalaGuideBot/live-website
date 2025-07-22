@@ -16,30 +16,28 @@ export function LeaderboardFactionSlide({ faction }: LeaderboardSlideProps) {
           <CardTitle>Classement Faction</CardTitle>
         </CardHeader>
         <CardContent className="px-0 flex-1 grid grid-rows-10">
-          {faction.leaderboard.map((factionItem, index) => (
+          {faction.leaderboard.map((item) => (
             <div
-              key={factionItem.name}
+              key={item.name}
               className="px-6 py-4 border-t flex items-center justify-between gap-4"
             >
               <div className="flex items-center gap-4">
                 <div
                   className={cn(
                     'w-12 font-mc text-xl',
-                    index + 1 === 1 && 'text-yellow-500',
-                    index + 1 === 2 && 'text-gray-500',
-                    index + 1 === 3 && 'text-amber-900'
+                    item.position === 1 && 'text-yellow-500',
+                    item.position === 2 && 'text-gray-500',
+                    item.position === 3 && 'text-amber-900'
                   )}
                 >
-                  #{index + 1}
+                  #{item.position}
                 </div>
                 <div className="flex items-center gap-2">
-                  <img src={faction.factionsEmblems[index].url} className="size-16" />
-                  <span className="font-mc text-lg">{factionItem.name}</span>
+                  <img src={item.emblemUrl} className="size-16" />
+                  <span className="font-mc text-lg">{item.name}</span>
                 </div>
               </div>
-              <div className="col-span-2 text-right font-mc text-xl">
-                {formatElo(factionItem.value)}
-              </div>
+              <div className="col-span-2 text-right font-mc text-xl">{formatElo(item.value)}</div>
             </div>
           ))}
         </CardContent>
@@ -58,7 +56,7 @@ function TopFactionCard({ faction, className, ...props }: TopFactionCardProps) {
     <div className={cn('grid auto-rows-min gap-8', className)} {...props}>
       <Card>
         <CardHeader className="border-b justify-center">
-          <h2 className="text-center text-2xl font-bold">Top Faction</h2>
+          <CardTitle className="text-center">Top Faction</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-4">
           <img src={faction.emblemUrl} className="size-50" />
@@ -66,7 +64,7 @@ function TopFactionCard({ faction, className, ...props }: TopFactionCardProps) {
           <Details className="flex items-center">
             <DetailsTitle className="text-lg">Description : </DetailsTitle>
             <DetailsContent className="text-lg">
-              {faction.description ? faction.description : 'Aucune description disponible'}
+              {faction.description ? faction.description : 'Aucune'}
             </DetailsContent>
           </Details>
           <Details className="flex items-center">
@@ -76,10 +74,12 @@ function TopFactionCard({ faction, className, ...props }: TopFactionCardProps) {
         </CardContent>
       </Card>
       <Card>
-        <Details>
-          <DetailsTitle className="text-center text-lg">Membres</DetailsTitle>
-          <DetailsContent className="grid grid-cols-[repeat(auto-fill,minmax(48px,1fr))] gap-2 p-4">
-            {faction.members.map((member) => (
+        <CardHeader>
+          <CardTitle className="text-center">Membres</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(48px,1fr))] gap-2">
+            {faction.players.map((member) => (
               <div key={member.uuid} className="group relative">
                 <img
                   src={getHeadUrl(member.uuid)}
@@ -88,8 +88,8 @@ function TopFactionCard({ faction, className, ...props }: TopFactionCardProps) {
                 />
               </div>
             ))}
-          </DetailsContent>
-        </Details>
+          </div>
+        </CardContent>
       </Card>
     </div>
   )

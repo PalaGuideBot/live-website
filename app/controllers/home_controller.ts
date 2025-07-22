@@ -29,33 +29,35 @@ export default class HomeController {
       return cache.getOrSet({
         key: 'paladium.leaderboard.faction',
         factory: async () => {
-          const factions = await this.paladiumService.getLeaderboardFactions()
-          const leaderboard = factions.slice(0, 10)
-          const factionsData = await Promise.all(
-            leaderboard.map(async (faction) => {
-              return await this.paladiumService.getFactionProfile(faction.name)
-            })
-          )
-          const factionsEmblems = await Promise.all(
-            factionsData.map(async (faction) => {
-              return await this.imageService.getOrCreateEmblem(faction.emblem)
+          const leaderboard = await this.paladiumService.getLeaderboardFactions()
+
+          const factions = await Promise.all(
+            leaderboard.slice(0, 10).map(async (faction) => {
+              const emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
+
+              return {
+                name: faction.name,
+                value: faction.value,
+                position: faction.position,
+                emblemUrl: emblem.url,
+              }
             })
           )
 
-          const topFaction = leaderboard.at(0)
-            ? await this.paladiumService.getFactionMembers(factionsData[0].uuid)
+          const topFaction = factions.at(0)
+            ? await this.paladiumService.getFactionProfile(factions.at(0)!.name)
             : null
 
           return {
-            leaderboard,
-            factionsData,
-            factionsEmblems,
-            topFaction: {
-              elo: leaderboard[0].value,
-              emblemUrl: factionsEmblems[0].url,
-              members: topFaction ? topFaction.data : [],
-              ...factionsData[0],
-            },
+            leaderboard: factions,
+            topFaction: topFaction
+              ? {
+                  ...topFaction,
+                  elo: factions.find((f) => f.name === topFaction.name)!.value,
+                  emblemUrl: factions.find((f) => f.name === topFaction.name)!.emblemUrl,
+                  players: topFaction.players.slice(0, 56),
+                }
+              : null,
           }
         },
         ttl: '5min',
