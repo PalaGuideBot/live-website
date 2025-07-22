@@ -1,16 +1,62 @@
+import { HeartHandshake } from 'lucide-react'
 import React, { useEffect, useRef } from 'react'
 
 import { TwitchIcon } from '@/components/icons'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Details, DetailsContent, DetailsTitle } from '@/components/ui/details'
+import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import type { HomePageProps } from '@/pages/home/index'
 import { useTwitchChat } from '../hooks/use_twitch_chat'
-import { Separator } from '@/components/ui/separator'
-import { HeartHandshake } from 'lucide-react'
 
 interface HomeSlideProps {
   sponsors: HomePageProps['sponsors']
+}
+
+export function HomeSlide({ sponsors }: HomeSlideProps) {
+  return (
+    <div className="flex-1 grid grid-cols-4 gap-8">
+      <div className="col-span-2 flex flex-col gap-8">
+        <Card className="overflow-hidden p-0">
+          <img
+            src="https://image.palaguidebot.fr/banner/banner_twitch.webp"
+            className="w-full h-48 object-cover"
+          />
+        </Card>
+        <Card>
+          <CardHeader className="text-2xl">
+            <CardTitle>Bienvenue sur le live PalaGuideBot</CardTitle>
+            <CardDescription className="text-lg">
+              Retrouvez les informations concernant Paladium en temps réel.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col justify-evenly gap-4 [&_*]:text-xl">
+            <Separator />
+            <Details>
+              <DetailsTitle>Site web</DetailsTitle>
+              <DetailsContent>https://palaguidebot.fr</DetailsContent>
+            </Details>
+            <Details>
+              <DetailsTitle>Discord Support</DetailsTitle>
+              <DetailsContent>discord.gg/palaguidebot</DetailsContent>
+            </Details>
+          </CardContent>
+        </Card>
+        <BotDetails />
+      </div>
+      <div>
+        <SponsorsCard sponsors={sponsors} />
+      </div>
+      <TwitchChatCard className="col-start-4" />
+    </div>
+  )
 }
 
 function TwitchChatCard({ className, ...props }: React.ComponentProps<typeof Card>) {
@@ -118,19 +164,15 @@ function SponsorsCard({
 
 function BotDetails({ className, ...props }: React.ComponentProps<typeof Details>) {
   return (
-    <Card className={cn('overflow-hidden p-0 gap-0 flex-1 mb-4', className)} {...props}>
+    <Card className={cn('overflow-hidden p-0 pb-4 gap-4 flex-1', className)} {...props}>
       <CardHeader className="bg-gradient-to-bl from-card from-20% to-[#00b2ff]/20 p-4">
-        <CardTitle className="flex items-center gap-2 font-semibold text-2xl">
-          <span>Informations du Bot Twitch*</span>
-        </CardTitle>
+        <CardTitle className="font-semibold text-2xl">Informations du Bot Twitch</CardTitle>
         <CardDescription className="text-lg">
           Retrouvez toutes les informations concernant le bot PalaGuideBot.
-          <br />
-          <span className="text-sm">* (Disponible uniquement sur les chaines partenaires)</span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col justify-evenly gap-4 [&_*]:text-base">
-        <Details className="mt-4">
+      <CardContent className="flex-1 flex flex-col justify-evenly gap-4 [&_*]:text-base px-4">
+        <Details>
           <DetailsTitle>
             p!lookup{' '}
             <span className="text-transparent bg-gradient-to-bl bg-clip-text from-[#ff8731] from-60% to-[#ffef61]">
@@ -162,54 +204,15 @@ function BotDetails({ className, ...props }: React.ComponentProps<typeof Details
           <DetailsContent>Affiche les commandes disponibles.</DetailsContent>
         </Details>
         <Separator />
-        <div className="text-center text-lg text-muted-foreground">
+      </CardContent>
+      <CardFooter className="px-4">
+        <div className="w-full text-center text-lg text-muted-foreground">
           Vous souhaitez ajouter le bot sur votre chaine Twitch ?
           <br />
           Les demandes sont ouvertes via ticket sur le serveur Discord. Aucun pré-requis n'est
           nécessaire
         </div>
-      </CardContent>
+      </CardFooter>
     </Card>
-  )
-}
-
-export function HomeSlide({ sponsors }: HomeSlideProps) {
-  return (
-    <div className="flex-1 grid grid-cols-4 gap-4">
-      <div className="col-span-2 flex flex-col gap-8">
-        <Card className="overflow-hidden p-0">
-          <img
-            src="https://image.palaguidebot.fr/banner/banner_twitch.webp"
-            className="w-full h-48 object-cover"
-          />
-        </Card>
-        <Card className="">
-          <CardHeader className="text-2xl">
-            <CardTitle>Bienvenue sur le live PalaGuideBot</CardTitle>
-            <CardDescription className="text-lg">
-              Retrouvez les informations concernant Paladium en temps réel.
-              <br />
-              Restez connecté pour ne rien manquer !
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col justify-evenly gap-4 [&_*]:text-xl">
-            <Separator />
-            <Details>
-              <DetailsTitle>Site web</DetailsTitle>
-              <DetailsContent>https://palaguidebot.fr</DetailsContent>
-            </Details>
-            <Details>
-              <DetailsTitle>Discord Support</DetailsTitle>
-              <DetailsContent>discord.gg/palaguidebot</DetailsContent>
-            </Details>
-          </CardContent>
-        </Card>
-        <BotDetails />
-      </div>
-      <div>
-        <SponsorsCard sponsors={sponsors} />
-      </div>
-      <TwitchChatCard className="col-start-4" />
-    </div>
   )
 }

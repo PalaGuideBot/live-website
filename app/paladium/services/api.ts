@@ -11,7 +11,12 @@ import { getOnYourMarksGoalItem } from '#event/contents/events'
 import { LeaderboardCategory, LeaderboardTrixiumCategory } from '#leaderboard/types'
 import { generateDefaultStatus } from '#paladium/contents/status'
 import type { ApiResponseError } from '#paladium/types'
-import { factionOnYourMarksValidator, factionQuestValidator } from '#paladium/validators/faction'
+import {
+  factionOnYourMarksValidator,
+  factionQuestValidator,
+  factionProfileValidator,
+  factionMembersValidator,
+} from '#paladium/validators/faction'
 import {
   factionsLeaderboardValidator,
   leaderboardCategoryValidator,
@@ -27,11 +32,35 @@ class PaladiumService {
 
   protected client = ky.create({
     prefixUrl: env.get('PALADIUM_BASE_URL'),
-    timeout: 10000,
+    timeout: 100000,
     headers: {
       Authorization: `Bearer ${env.get('PALADIUM_API_KEY')}`,
     },
   })
+
+  // FACTION REQUESTS
+
+  async getFactionProfile(name: string) {
+    try {
+      const response = await this.client.get(`paladium/faction/profile/${name}`)
+      const data = await response.json()
+
+      return factionProfileValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
+
+  async getFactionMembers(uuid: string) {
+    try {
+      const response = await this.client.get(`paladium/faction/profile/${uuid}/players?limit=100`)
+      const data = await response.json()
+
+      return factionMembersValidator.validate(data)
+    } catch (error: unknown) {
+      throw await buildError(error)
+    }
+  }
 
   // PLAYER REQUESTS
 
@@ -129,11 +158,11 @@ class PaladiumService {
       const response = await this.client.get(`paladium/faction/leaderboard`)
       const data = await response.json()
 
-      const validate = await factionsLeaderboardValidator.validate(data)
+      const result = await factionsLeaderboardValidator.validate(data)
 
-      return validate.map((faction) => ({
-        name: faction.name,
-        value: faction.elo,
+      return result.map(({ elo, ...faction }) => ({
+        ...faction,
+        value: elo,
       }))
     } catch (error: unknown) {
       throw await buildError(error)

@@ -4,13 +4,15 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { dailyEvents } from '#app/event/contents/events'
 import { GitHubService } from '#app/github/services/api'
 import { PaladiumService } from '#app/paladium/services/api'
+import { ImageService } from '#paladium/services/image'
 import cache from '#cache/cache'
 
 @inject()
 export default class HomeController {
   constructor(
     private paladiumService: PaladiumService,
-    private githubService: GitHubService
+    private githubService: GitHubService,
+    private imageService: ImageService
   ) {}
 
   async handle({ inertia }: HttpContext) {
@@ -23,7 +25,45 @@ export default class HomeController {
     }
     //   const factionQuest = () => this.paladiumService.getFactionQuest()
     //   const factionOnYourMarks = () => this.paladiumService.getFactionOnYourMarks()
-    //   const factionLeaderboard = () => this.paladiumService.getLeaderboardFactions()
+    const factionLeaderboard = () => {
+      return cache.getOrSet({
+        key: 'paladium.leaderboard.faction',
+        factory: async () => {
+          const leaderboard = await this.paladiumService.getLeaderboardFactions()
+
+          const factions = await Promise.all(
+            leaderboard.slice(0, 10).map(async (faction) => {
+              const emblem = await this.imageService.getOrCreateEmblem(faction.emblem)
+
+              return {
+                name: faction.name,
+                value: faction.value,
+                position: faction.position,
+                emblemUrl: emblem.url,
+              }
+            })
+          )
+
+          const topFaction = factions.at(0)
+            ? await this.paladiumService.getFactionProfile(factions.at(0)!.name)
+            : null
+
+          return {
+            leaderboard: factions,
+            topFaction: topFaction
+              ? {
+                  ...topFaction,
+                  elo: factions.find((f) => f.name === topFaction.name)!.value,
+                  emblemUrl: factions.find((f) => f.name === topFaction.name)!.emblemUrl,
+                  players: topFaction.players.slice(0, 56),
+                }
+              : null,
+          }
+        },
+        ttl: '5min',
+      })
+    }
+
     const moneyLeaderboard = () => {
       return cache.getOrSet({
         key: 'paladium.leaderboard.money',
@@ -56,7 +96,7 @@ export default class HomeController {
       status,
       // factionQuest,
       // factionOnYourMarks,
-      // factionLeaderboard,
+      factionLeaderboard,
       moneyLeaderboard,
       // allianceLeaderboard,
       sponsors,

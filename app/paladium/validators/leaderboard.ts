@@ -7,6 +7,10 @@ export const factionsLeaderboardValidator = vine.compile(
     vine.object({
       name: vine.string(),
       elo: vine.number(),
+      emblem: vine
+        .array(vine.number())
+        .parse((value) => (value ? Object.values(value) : ([] as number[]))),
+      position: vine.number(),
     })
   )
 )

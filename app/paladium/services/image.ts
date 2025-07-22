@@ -1,6 +1,6 @@
 import ky, { HTTPError } from 'ky'
 
-import { minecraftItemValidator } from '#paladium/validators/image'
+import { minecraftItemValidator, imageValidator } from '#paladium/validators/image'
 import env from '#start/env'
 
 const imageClient = ky.create({
@@ -39,6 +39,25 @@ export class ImageService {
     } catch (error: unknown) {
       if (error instanceof HTTPError && error.response.status === 404) {
         throw new Error(`Minecraft entity with id "${id}" not found`)
+      }
+      throw error
+    }
+  }
+
+  async getOrCreateEmblem(body: number[]) {
+    try {
+      const response = await imageClient.post('emblem', {
+        body: JSON.stringify({
+          body,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      })
+      const data = await response.json()
+
+      return await imageValidator.validate(data)
+    } catch (error: unknown) {
+      if (error instanceof HTTPError && error.response.status === 404) {
+        throw new Error('Image not found')
       }
       throw error
     }

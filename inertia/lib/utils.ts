@@ -15,3 +15,12 @@ export function formatPrice(value: number, options?: Intl.NumberFormatOptions) {
   }
   return new Intl.NumberFormat('fr-FR', options).format(value)
 }
+
+export function formatElo(value: number, options?: Intl.NumberFormatOptions) {
+  options = {
+    style: 'decimal',
+    maximumFractionDigits: 0,
+    ...options,
+  }
+  return new Intl.NumberFormat('fr-FR', options).format(value) + ' ELO'
+}

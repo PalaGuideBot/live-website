@@ -10,11 +10,11 @@ interface LeaderboardSlideProps {
   money: HomePageProps['moneyLeaderboard']
 }
 
-export function LeaderboardSlide({ money }: LeaderboardSlideProps) {
+export function LeaderboardMoneySlide({ money }: LeaderboardSlideProps) {
   return (
     <div className="flex-1 grid grid-cols-4 gap-8 [&_[data-slot=card-title]]:text-xl">
-      <Card className="col-span-3 pb-0">
-        <CardHeader>
+      <Card className="col-span-3 py-4 pb-0 gap-4">
+        <CardHeader className="px-4">
           <CardTitle>Classement Money</CardTitle>
         </CardHeader>
         <CardContent className="px-0 flex-1 grid grid-rows-10">
@@ -35,7 +35,7 @@ export function LeaderboardSlide({ money }: LeaderboardSlideProps) {
                   #{player.position}
                 </div>
                 <div className="flex items-center gap-2">
-                  <img src={getHeadUrl(player.uuid)} className="size-16" />
+                  <img src={getHeadUrl(player.uuid)} className="size-14" />
                   <span className="font-mc text-lg">{player.username}</span>
                 </div>
               </div>
@@ -58,11 +58,9 @@ interface TopPlayerCardProps extends React.ComponentProps<'div'> {
 function TopPlayerCard({ player, className, ...props }: TopPlayerCardProps) {
   return (
     <div className={cn('grid grid-rows-3 gap-8', className)} {...props}>
-      <Card className="row-span-2">
-        <CardHeader className="border-b justify-center">
-          <div className="inline-flex items-center gap-2">
-            <CardTitle className="block">{player.profile.username}</CardTitle>
-          </div>
+      <Card className="row-span-2 py-4 gap-4">
+        <CardHeader className="px-4 border-b [.border-b]:pb-4">
+          <CardTitle className="text-center">{player.profile.username}</CardTitle>
         </CardHeader>
         <CardContent className="flex-1 relative">
           <div className="absolute inset-0 flex justify-center items-center">
@@ -73,8 +71,8 @@ function TopPlayerCard({ player, className, ...props }: TopPlayerCardProps) {
           </div>
         </CardContent>
       </Card>
-      <Card className="row-span-1">
-        <CardContent className="flex-1 flex flex-col justify-evenly">
+      <Card className="row-span-1 py-4">
+        <CardContent className="px-4 flex-1 flex flex-col justify-evenly">
           <Details className="flex items-center">
             <DetailsTitle className="text-lg">Pseudo :</DetailsTitle>
             <DetailsContent className="text-lg">{player.profile.username}</DetailsContent>
