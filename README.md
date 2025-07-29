@@ -51,7 +51,7 @@ pnpm install
 cp .env.example .env
 ```
 
-3. **Générer une nouvelle ``APP_KEY``
+3. **Générer une nouvelle `APP_KEY`**
 ```bash
 node ace generate:key
 ```
