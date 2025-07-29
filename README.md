@@ -16,9 +16,8 @@ Ce projet utilise AdonisJS 6 + Inertia (SSR) + React, permettant d'afficher des 
 ## 🛠️ Technologies utilisées
 
 ### Backend
-- **[AdonisJS 6](https://adonisjs.com/)** - Framework Node.js moderne
-- **[BentoCache](https://bentocache.dev/)** - Système de cache haute performance
-- **TypeScript** - Typage statique
+- **[AdonisJS 6](https://adonisjs.com/)** - Framework Node.js
+- **[BentoCache](https://bentocache.dev/)** - Système de cache
 
 ### Frontend
 - **[React 19](https://reactjs.org/)** - Interface utilisateur
@@ -26,14 +25,13 @@ Ce projet utilise AdonisJS 6 + Inertia (SSR) + React, permettant d'afficher des 
 - **[Tailwind CSS 4](https://tailwindcss.com/)** - Framework CSS
 - **[Radix UI](https://www.radix-ui.com/)** - Composants accessibles
 - **[Recharts](https://recharts.org/)** - Graphiques et visualisations
-- **[Lucide React](https://lucide.dev/)** - Icônes modernes
-- **TypeScript** - Typage statique
+- **[Lucide React](https://lucide.dev/)** - Icônes
 
 ### Outils de développement
-- **Vite** - Build tool ultra-rapide
+- **Vite** - Build tool
 - **ESLint** - Linting du code
 - **Prettier** - Formatage automatique
-- **PNPM** - Gestionnaire de paquets performant
+- **PNPM** - Gestionnaire de paquets
 
 ## 🚀 Installation et démarrage
 
@@ -69,8 +67,8 @@ pnpm dev
 ## 📁 Structure du projet
 
 ```
-├── app/                    # Backend AdonisJS
-│   ├── controllers/        # Contrôleurs HTTP
+├── app/                   # Backend AdonisJS
+│   ├── controllers/       # Contrôleurs HTTP
 │   ├── paladium/          # Logique spécifique Paladium
 │   ├── cache/             # Système de cache
 │   └── event/             # Gestion des événements
