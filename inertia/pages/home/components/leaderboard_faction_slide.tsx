@@ -67,10 +67,6 @@ function TopFactionCard({ faction, className, ...props }: TopFactionCardProps) {
               {faction.description ? faction.description : 'Aucune'}
             </DetailsContent>
           </Details>
-          <Details className="flex items-center">
-            <DetailsTitle className="text-lg">Alliance: </DetailsTitle>
-            <DetailsContent className="text-lg">{faction.alliance}</DetailsContent>
-          </Details>
         </CardContent>
       </Card>
       <Card>

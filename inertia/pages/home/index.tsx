@@ -20,7 +20,6 @@ export default function HomePage(props: HomePageProps) {
     // factionOnYourMarks,
     factionLeaderboard,
     moneyLeaderboard,
-    // allianceLeaderboard,
     sponsors,
   } = props
 

@@ -81,7 +81,6 @@ export default class HomeController {
         ttl: '5min',
       })
     }
-    //   const allianceLeaderboard = () => this.paladiumService.getLeaderboardRankingGlobal('alliance')
 
     const sponsors = () => {
       return cache.getOrSet({
@@ -98,7 +97,6 @@ export default class HomeController {
       // factionOnYourMarks,
       factionLeaderboard,
       moneyLeaderboard,
-      // allianceLeaderboard,
       sponsors,
     })
   }

@@ -13,7 +13,6 @@ const categories = [
   'koth',
   'clicker',
   'factions',
-  'alliance',
 ] as const
 
 const trixiumCategories = ['player', 'faction'] as const
@@ -58,10 +57,6 @@ const config = [
   {
     name: 'trixium.player',
     cacheKey: 'leaderboard:trixium.player',
-  },
-  {
-    name: 'alliance',
-    cacheKey: 'leaderboard:alliance',
   },
   {
     name: 'job.alchemist',
